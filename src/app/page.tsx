@@ -20,13 +20,17 @@ const Home: NextPage = () => {
     //const rumblePattern = /rumble\.com\/v([a-zA-Z0-9_-]+)-/;
     const rumblePattern = /rumble\.com\/(?:v([a-zA-Z0-9_-]+)-|embed\/v([a-zA-Z0-9_-]+)\/)/;
     // Twitter URL pattern
-    const twitterPattern = /x.com\.\/v([a-zA-z0-9_-]+)-/;
+    const twitterPattern = /x\.com\/[a-zA-Z0-9_]+\/status\/(\d+)/;
 
   if (rumblePattern.test(videoUrl)) {
-
+    fetch('http://localhost:3000/api/getRumbleUrl') 
+    alert('Entered into Rumble')
+    return;
   }
   else if (twitterPattern.test(videoUrl)) {
-
+    fetch('http://localhost:3000/api/getTwitterUrl')
+    alert('Entered Twitter')
+    return;
   }
   else if (youtubePattern.test(videoUrl)) {
       const videoId = videoUrl.match(youtubePattern)?.[1];      
@@ -40,7 +44,7 @@ const Home: NextPage = () => {
     alert('Link is not valid');
   };
   const getRumbleUrl = async () => {
-    fetch('http://localhost:3001/api/getRumbleUrl')
+    fetch('http://localhost:3000/api/getRumbleUrl')
   }
   const generateEmbedUrl = (videoId: string) => {
     return `https://www.youtube.com/embed/${videoId}?loop=1&playlist=${videoId}`;
@@ -53,6 +57,17 @@ return(
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Image src={logo} className='mx-auto' width={250} height={250} alt="This is the logo of my site." />
+    <p className='text-center'>Your Music... No Interruptions</p>
+    <div className='flex flex-col items-center mt-8'>
+      <form action="">
+        <input className='border-solid border-2 border-light-blue-500 h-9 w-96 text-center' type="text" name='link' placeholder='Enter the URL...' value={videoUrl} onChange={handleInputChange} />
+      </form>          
+      <button type="button" onClick={handleReplayClick} className='p-2 mt-2 bg-red-700 text-center hover:text-red-600 hover:bg-white hover:border-2 hover:border-red-600 font-serif rounded text-sm text-white'>REPLAY</button>
+      {iframeSrc && (
+        <iframe className='mt-1 iframe-video' width="640" height="360" src={iframeSrc} allowFullScreen title="Video player"/>
+      )}
+    </div>
+    <p className='text-center mt-10'>Watch your favorite YouTube/Rumble video over and over again without pressing replay (:</p>
     <div className="flex h-screen w-screen items-center justify-center">
       <input type="text" className="rounded-md border-2 border-gray-300 p-2" placeholder="Enter Rumble URL"/>
       <button onClick={getRumbleUrl} type="button" className="rounded-md big-pink-600 p-4 text-xl font-bold">Enter</button>
