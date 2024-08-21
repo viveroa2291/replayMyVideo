@@ -4,7 +4,7 @@ import { useState, ChangeEvent, MouseEvent } from 'react';
 import Image from 'next/image'
 import logo from './images/logo.png'
 import Head from 'next/head'
-
+import '../app/styles.css'
 const Home: NextPage = () => {
 
   const [videoUrl, setVideoUrl] = useState<string>('');
@@ -68,11 +68,13 @@ return(
       )}
     </div>
     <p className='text-center mt-10'>Watch your favorite YouTube/Rumble video over and over again without pressing replay (:</p>
-    <div className="flex h-screen w-screen items-center justify-center">
+    
+    <div className="flex mt-20 w-screen items-center justify-center">
       <input type="text" className="rounded-md border-2 border-gray-300 p-2" placeholder="Enter Rumble URL"/>
       <button onClick={getRumbleUrl} type="button" className="rounded-md big-pink-600 p-4 text-xl font-bold">Enter</button>
      {/*<blockquote className="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">6 days until Vultures <a href="https://t.co/oIht49i7lv">pic.twitter.com/oIht49i7lv</a></p>&mdash; Donda Times (@dondatimes) <a href="https://twitter.com/dondatimes/status/1753797053019308420?ref_src=twsrc%5Etfw">February 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script> */} 
-    </div>
+    </div>      
+    <p className="text-center">This is just used for testing at the moment</p>
   </>
 )
 }
