@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 
 const getTwitterUrl = async () => {
-    const response = await fetch('https://x.com/dondatimes/status/1753797053019308420'); // X Link
+    const response = await fetch('https://publish.twitter.com/'); // X Link
     if(!response.ok) {
       throw new Error(`HTPP error: ${response.status}`)
     }
