@@ -1,19 +1,20 @@
-import { JSDOM } from 'jsdom'
+import puppeteer from 'puppeteer';
 
 const getRumbleUrl = async () => {
-    const response = await fetch('https://publish.twitter.com/'); // X Link
-    // const response = await fetch('https://rumble.com/v4yjhvh-city-in-the-sky-kanye-west.html'); 
-    if(!response.ok) {
-      throw new Error(`HTPP error: ${response.status}`)
-    }
-    const html = await response.text()
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://publish.twitter.com/');
 
-    const dom = new JSDOM(html)
-    const document = dom.window.document
+  await page.waitForSelector('#app-root');
 
-    const downloads = document.querySelector('.downloads')
-    console.log('html', html)
-    return ''
-}
+ // const appRootHtml = await page.$eval('#app-root', (element) => element.outerHTML);
 
-export default getRumbleUrl; 
+  const widgetsSelectorTitle = await page.$eval('.WidgetsSelector-title', (element) => element.textContent);
+  console.log('What is inside here: ', widgetsSelectorTitle);
+
+  await browser.close();
+
+  return '';
+};
+
+export default getRumbleUrl;
