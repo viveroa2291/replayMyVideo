@@ -1,20 +1,18 @@
 import puppeteer from 'puppeteer';
 
-const getRumbleUrl = async () => {
+const getRumbleUrl = async (url: string) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('https://publish.twitter.com/');
+  await page.goto(url);
 
-  await page.waitForSelector('#app-root');
+  await page.waitForSelector('.media-by-actions-button');
 
- // const appRootHtml = await page.$eval('#app-root', (element) => element.outerHTML);
-
-  const widgetsSelectorTitle = await page.$eval('.WidgetsSelector-title', (element) => element.textContent);
+  const widgetsSelectorTitle = await page.$eval('.media-by-actions-button', (element) => element.textContent?.trim());
   console.log('What is inside here: ', widgetsSelectorTitle);
 
   await browser.close();
 
-  return '';
+  return ''; // Return the title instead of an empty string
 };
 
 export default getRumbleUrl;
